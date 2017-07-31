@@ -1,6 +1,5 @@
 package cn.carwheel.util;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.apache.commons.lang3.StringUtils;
 
 /**
