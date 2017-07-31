@@ -4,7 +4,7 @@
 
     <groupId>cn.carwheel</groupId>
     <artifactId>carwheel</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <packaging>jar</packaging>
 
     <name>carwheel</name>
@@ -43,7 +43,7 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
-            <version>1.6.1</version>
+            <version>1.7.25</version>
         </dependency>
 
         <!-- MySQL-->
@@ -81,7 +81,7 @@
         <dependency>
             <groupId>commons-dbutils</groupId>
             <artifactId>commons-dbutils</artifactId>
-            <version>1.6</version>
+            <version>1.7</version>
         </dependency>
     </dependencies>
 
