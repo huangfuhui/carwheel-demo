@@ -10,6 +10,8 @@ import cn.carwheel.helper.ControllerHelper;
 import cn.carwheel.util.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
@@ -26,6 +28,8 @@ import java.util.Map;
 @WebServlet(urlPatterns = "/*", loadOnStartup = 0)
 public class DispatcherServlet extends HttpServlet {
 
+    private Logger logger = LoggerFactory.getLogger(DispatcherServlet.class);
+
     public void init(ServletConfig servletConfig) throws ServletException {
         // 初始化相关Helper类
         HelperLoader.init();
@@ -36,16 +40,19 @@ public class DispatcherServlet extends HttpServlet {
         jspServlet.addMapping(ConfigHelper.getAppJspPath() + "*");
         // 注册处理静态资源的默认Servlet
         ServletRegistration defaultServlet = servletContext.getServletRegistration("default");
-        defaultServlet.addMapping(ConfigHelper.getAppBasePackage() + "*");
+        defaultServlet.addMapping(ConfigHelper.getAssetPath() + "*");
     }
 
     public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // 获取请求方法与路径
         String requestMethod = request.getMethod().toLowerCase();
         String requestPath = request.getPathInfo();
+        logger.info("requestMethod: " + requestMethod + " " + "requestPath: " + requestPath);
+
         // 获取Action处理器
         Handler handler = ControllerHelper.getHandler(requestMethod, requestPath);
         if (null != handler) {
+            logger.info("controller: " + handler.getControllerClass().toString() + "  " + "method: " + handler.getActionMethod().toString());
             // 获取Controller类以及Bean实例
             Class<?> controllerClass = handler.getControllerClass();
             Object controllerBean = BeanHelper.getBean(controllerClass);
@@ -80,6 +87,7 @@ public class DispatcherServlet extends HttpServlet {
                 // 返回JSP页面
                 View view = (View) result;
                 String path = view.getPath();
+                logger.info("viewPath: " + path);
                 if (StringUtils.isNotEmpty(path)) {
                     if (path.startsWith("/")) {
                         response.sendRedirect(request.getContextPath() + path);
@@ -100,6 +108,7 @@ public class DispatcherServlet extends HttpServlet {
                     response.setCharacterEncoding("UTF-8");
                     PrintWriter writer = response.getWriter();
                     String json = JsonUtil.toJson(model);
+                    logger.info("returnDataForJson: " + json);
                     writer.write(json);
                     writer.flush();
                     writer.close();
