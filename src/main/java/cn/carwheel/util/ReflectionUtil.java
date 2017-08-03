@@ -19,7 +19,7 @@ public final class ReflectionUtil {
         try {
             instance = cls.newInstance();
         } catch (Exception e) {
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         }
         return instance;
     }
@@ -38,7 +38,7 @@ public final class ReflectionUtil {
             method.setAccessible(true);
             result = method.invoke(obj, args);
         } catch (Exception e) {
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         }
         return result;
     }
@@ -55,7 +55,7 @@ public final class ReflectionUtil {
             field.setAccessible(true);
             field.set(obj, value);
         } catch (Exception e) {
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         }
     }
 }
