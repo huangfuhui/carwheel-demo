@@ -47,12 +47,12 @@ public class DispatcherServlet extends HttpServlet {
         // 获取请求方法与路径
         String requestMethod = request.getMethod().toLowerCase();
         String requestPath = request.getPathInfo();
-        logger.info("requestMethod: " + requestMethod + " " + "requestPath: " + requestPath);
+        logger.debug("requestMethod: " + requestMethod + " " + "requestPath: " + requestPath);
 
         // 获取Action处理器
         Handler handler = ControllerHelper.getHandler(requestMethod, requestPath);
         if (null != handler) {
-            logger.info("controller: " + handler.getControllerClass().toString() + "  " + "method: " + handler.getActionMethod().toString());
+            logger.debug("controller: " + handler.getControllerClass().toString() + "  " + "method: " + handler.getActionMethod().toString());
             // 获取Controller类以及Bean实例
             Class<?> controllerClass = handler.getControllerClass();
             Object controllerBean = BeanHelper.getBean(controllerClass);
@@ -87,7 +87,7 @@ public class DispatcherServlet extends HttpServlet {
                 // 返回JSP页面
                 View view = (View) result;
                 String path = view.getPath();
-                logger.info("viewPath: " + path);
+                logger.debug("viewPath: " + path);
                 if (StringUtils.isNotEmpty(path)) {
                     if (path.startsWith("/")) {
                         response.sendRedirect(request.getContextPath() + path);
@@ -108,7 +108,7 @@ public class DispatcherServlet extends HttpServlet {
                     response.setCharacterEncoding("UTF-8");
                     PrintWriter writer = response.getWriter();
                     String json = JsonUtil.toJson(model);
-                    logger.info("returnDataForJson: " + json);
+                    logger.debug("returnDataForJson: " + json);
                     writer.write(json);
                     writer.flush();
                     writer.close();
