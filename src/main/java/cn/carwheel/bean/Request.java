@@ -6,7 +6,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 public class Request {
 
     /**
-     * 请求方法
+     * 请求方法类型
      */
     private String requestMethod;
 
