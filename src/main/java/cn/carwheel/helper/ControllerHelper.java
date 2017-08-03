@@ -3,6 +3,8 @@ package cn.carwheel.helper;
 import cn.carwheel.annotation.Action;
 import cn.carwheel.bean.Handler;
 import cn.carwheel.bean.Request;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -10,6 +12,8 @@ import java.util.Map;
 import java.util.Set;
 
 public final class ControllerHelper {
+
+    private static Logger logger = LoggerFactory.getLogger(ControllerHelper.class);
 
     /**
      * 用于存放请求与处理器的映射关系
@@ -37,6 +41,8 @@ public final class ControllerHelper {
                                 // 获取请求方法与请求路径
                                 String requestMethod = array[0];
                                 String requestPath = array[1];
+                                logger.debug("requestMethod: {} | requestPath: {} | controllerClassName: {} | method: {}",
+                                        requestMethod, requestPath, controllerClass.getName(), method);
                                 Request request = new Request(requestMethod, requestPath);
                                 Handler handler = new Handler(controllerClass, method);
                                 // 初始化Action Map
