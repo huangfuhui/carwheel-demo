@@ -10,7 +10,7 @@ public class Data {
      */
     private Object model;
 
-    private Data(Object model) {
+    public Data(Object model) {
         this.model = model;
     }
 
