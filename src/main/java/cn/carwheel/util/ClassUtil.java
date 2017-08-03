@@ -1,8 +1,6 @@
 package cn.carwheel.util;
 
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -15,8 +13,6 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 public class ClassUtil {
-
-    private static Logger logger = LoggerFactory.getLogger(ClassUtil.class);
 
     /**
      * 获取类加载器
@@ -51,13 +47,11 @@ public class ClassUtil {
      * @return
      */
     public static Set<Class<?>> getClassSet(String packageName) {
-        logger.info("packageName: " + packageName);
         Set<Class<?>> classSet = new HashSet<Class<?>>();
         try {
             Enumeration<URL> urls = getClassLoader().getResources(packageName.replace(".", "/"));
             while (urls.hasMoreElements()) {
                 URL url = urls.nextElement();
-                logger.info("url:" + url.toString());
                 if (null != url) {
                     String protocol = url.getProtocol();
                     if (protocol.equals("file")) {
